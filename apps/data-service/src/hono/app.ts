@@ -1,7 +1,8 @@
 import { Hono } from "hono";
-import { getDestinationForCountry } from "@/helpers/routing-ops";
-import { initDatabase } from "@repo/data-ops/database";
-import { getLink } from "@repo/data-ops/queries/links";
+import {
+  getDestinationForCountry,
+  getLinkInfoFromKV,
+} from "@/helpers/routing-ops";
 import { cloudflareInfoSchema } from "@repo/data-ops/zod-schema/links";
 
 // 定义 Hono app，绑定 Cloudflare Env 类型
@@ -28,11 +29,13 @@ app.get("/geo", (c) => {
 app.get("/:id", async (c) => {
   const id = c.req.param("id");
 
-  // 初始化数据库
-  initDatabase(c.env.DB);
+  // 从 KV 缓存获取链接信息（缓存未命中时回源数据库）
+  const linkInfo = await getLinkInfoFromKV(
+    c.env.ROUTE_CACHE,
+    c.env.DB,
+    id
+  );
 
-  // 从数据库获取链接信息
-  const linkInfo = await getLink({ linkId: id });
   if (!linkInfo) {
     return c.text("Destination not found", 404);
   }
