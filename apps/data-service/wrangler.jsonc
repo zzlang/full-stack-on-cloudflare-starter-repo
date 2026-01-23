@@ -9,6 +9,21 @@
 	"compatibility_date": "2025-06-17",
 	"compatibility_flags": ["nodejs_compat"],
 	"observability": {
-		"enabled": true,
+		"enabled": true
 	},
+	// 任务 3.1：D1 数据库绑定
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "test",
+			"database_id": "76658fbd-3bdb-411a-b16c-7fe5774a3a91"
+		}
+	],
+	// 任务 4.1：KV 命名空间绑定
+	"kv_namespaces": [
+		{
+			"binding": "ROUTE_CACHE",
+			"id": "route-cache-kv-id"
+		}
+	]
 }

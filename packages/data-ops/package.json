@@ -30,6 +30,10 @@
     "./auth": {
       "types": "./dist/better-auth/auth.d.ts",
       "default": "./dist/better-auth/auth.js"
+    },
+    "./drizzle-out/schema": {
+      "types": "./dist/drizzle-out/schema.d.ts",
+      "default": "./dist/drizzle-out/schema.js"
     }
   },
   "keywords": [],
